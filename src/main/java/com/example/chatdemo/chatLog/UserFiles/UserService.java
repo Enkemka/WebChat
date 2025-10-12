@@ -19,7 +19,7 @@ public class UserService {
 
     public User registerUser(UserRegisterDto user) {
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("User/ userName already exists");
+            throw new IllegalArgumentException("userName already exists");
         }
 
         User RegisteredUser = new User(user.getUsername(),
