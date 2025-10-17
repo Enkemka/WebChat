@@ -1,7 +1,5 @@
-package com.example.chatdemo;
+package com.example.chatdemo.Chat;
 
-import com.example.chatdemo.chatLog.UserFiles.User;
-import com.example.chatdemo.chatLog.UserFiles.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.messaging.Message;
@@ -10,8 +8,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import static com.mongodb.client.model.Updates.pull;
-
 @Service
 public class chatService {
 
@@ -19,6 +15,10 @@ public class chatService {
     private chatRepo chatRepo;
 
     MongoTemplate mongoTemplate;
+
+    public chat showChat (String chatId){
+        return chatRepo.findByChatId(chatId);
+    }
 
 
     //add new chat
@@ -67,6 +67,7 @@ public class chatService {
         mongoTemplate.updateFirst(query, update, chat.class);
 
     }
+
 
 
 

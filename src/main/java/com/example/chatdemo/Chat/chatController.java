@@ -1,18 +1,18 @@
-package com.example.chatdemo;
+package com.example.chatdemo.Chat;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.messaging.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/chat")
 @CrossOrigin(origins = "http://localhost:3000")
 public class chatController {
 
-    @Autowired
+
+
+   /* @Autowired
     private chatService chatService;
 
     public chatController(chatService chatService) {
@@ -20,17 +20,36 @@ public class chatController {
     }
 
     @PostMapping("/createChat")
-    public ResponseEntity<chat> createChat(@RequestBody chat Chat){
-        try{
+    public ResponseEntity<chat> createChat(@RequestBody chat Chat) {
+        try {
             chatService.newChat(Chat);
-        return ResponseEntity.ok(Chat);
-
-            }catch(Exception e){
-
+            return ResponseEntity.ok(Chat);
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
 
-}
+    //fix
+    @PostMapping("/createChatWith/{userId}")
+    public ResponseEntity<chat> createChatWith(@PathVariable String userId) {
+        try {
+            chat Chat = chatService.newChat(new chat());
+            return ResponseEntity.ok(Chat);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/view/{chatId}")
+    public ResponseEntity<chat> viewChat(@PathVariable String chatId) {
+        try {
+            chat Chat = chatService.getChat(chatId);
+            return ResponseEntity.ok(Chat);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }*/
+
 
 //usermakes chat
 
@@ -39,7 +58,7 @@ public class chatController {
 
 
 
-
+/*
 
 
 
@@ -98,6 +117,7 @@ public class chatController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
+
 
 }

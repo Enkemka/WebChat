@@ -1,5 +1,6 @@
-package com.example.chatdemo;
+package com.example.chatdemo.Chat;
 
+import com.example.chatdemo.message;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

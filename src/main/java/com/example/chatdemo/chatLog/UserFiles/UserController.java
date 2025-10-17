@@ -1,6 +1,7 @@
 package com.example.chatdemo.chatLog.UserFiles;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/User/")
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 public class UserController {
@@ -19,24 +20,28 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("/register")
-    public ResponseEntity<UserRegisterDto> RegisterUser(@RequestBody UserRegisterDto userDto) {
-        userService.registerUser(userDto);
-        return ResponseEntity.ok(userDto);
 
-    }
 
     @GetMapping("/home")
-    public ResponseEntity<Map<String, Object>> homePage(@AuthenticationPrincipal UserDetails user ){
+    public ResponseEntity<?> homePage(@AuthenticationPrincipal UserDetails user ){
+        if (user == null) {
+            System.out.println("not wokring");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User not authenticated"));
+        }
         String username=user.getUsername();
         return ResponseEntity.ok(Map.of("username",username));
     }
 
 
-    @GetMapping("/test")
-    public String test(){
-        return "yo whats good";
-    }
+
+    //get recent chats
+
+
+    //settings
+
+
+
 
 
 }
