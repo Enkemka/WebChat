@@ -14,11 +14,17 @@ public class chat {
     private List<String> usersInChatId;
     private List<message> messagesInChat;
 
+
+    public chat(List<String>usersInChat) {
+        this.usersInChatId = usersInChat;
+    }
+
     public chat(String id,List<String>usersInChat,List<message> messagesInChat) {
         this.id = id;
         this.usersInChatId = usersInChat;
         this.messagesInChat = messagesInChat;
     }
+
 
     public String getId() {
         return id;

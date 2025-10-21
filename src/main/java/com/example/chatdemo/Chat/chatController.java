@@ -1,8 +1,12 @@
 package com.example.chatdemo.Chat;
 
+import com.example.chatdemo.message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.messaging.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -10,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 public class chatController {
 
-
-
-   /* @Autowired
+   @Autowired
     private chatService chatService;
 
     public chatController(chatService chatService) {
@@ -20,48 +22,25 @@ public class chatController {
     }
 
     @PostMapping("/createChat")
-    public ResponseEntity<chat> createChat(@RequestBody chat Chat) {
+    public ResponseEntity<chat> createChat(@RequestBody String userId) {
         try {
-            chatService.newChat(Chat);
-            return ResponseEntity.ok(Chat);
+
+            return ResponseEntity.ok(chatService.newChat(userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-    //fix
-    @PostMapping("/createChatWith/{userId}")
-    public ResponseEntity<chat> createChatWith(@PathVariable String userId) {
+
+    @GetMapping("/{chatId}/view")
+    public ResponseEntity<List<message>> viewChat(@PathVariable String chatId) {
         try {
-            chat Chat = chatService.newChat(new chat());
+            List<message> Chat = chatService.showChat(chatId);
             return ResponseEntity.ok(Chat);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-
-    @GetMapping("/view/{chatId}")
-    public ResponseEntity<chat> viewChat(@PathVariable String chatId) {
-        try {
-            chat Chat = chatService.getChat(chatId);
-            return ResponseEntity.ok(Chat);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }*/
-
-
-//usermakes chat
-
-
-
-
-
-
-/*
-
-
-
 
 
     @DeleteMapping("/deleteChat/{chatId}")
@@ -75,6 +54,47 @@ public class chatController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
+    @PatchMapping("/{chatId}/add")
+    public ResponseEntity<?> addMessage(@RequestBody Message message,@PathVariable String chatId){
+        //
+
+        try {
+            chatService.AddMessage(message,chatId);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PatchMapping("/{chatId}/remove")
+
+    public ResponseEntity<?> removeMessage(@PathVariable String messageId,@PathVariable String chatId){
+
+        try {
+            chatService.deleteMessage(messageId,chatId);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+//usermakes chat
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -99,25 +119,6 @@ public class chatController {
         }
     }
 
-    @PatchMapping("{chatId}/addMessage/")
-    public ResponseEntity<?> addMessage(@RequestBody Message message,@PathVariable String chatId){
-        try {
-            chatService.AddMessage(message,chatId);
-            return ResponseEntity.ok("ok");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @PatchMapping("{chatId}/DeleteMessage/{messageId}")
-    public ResponseEntity<?> removeMessage(@PathVariable String messageId,@PathVariable String chatId){
-        try {
-            chatService.deleteMessage(messageId,chatId);
-            return ResponseEntity.ok("ok");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 
 
 }

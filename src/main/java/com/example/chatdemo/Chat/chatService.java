@@ -1,5 +1,6 @@
 package com.example.chatdemo.Chat;
 
+import com.example.chatdemo.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.messaging.Message;
@@ -7,6 +8,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class chatService {
@@ -16,16 +21,24 @@ public class chatService {
 
     MongoTemplate mongoTemplate;
 
-    public chat showChat (String chatId){
-        return chatRepo.findByChatId(chatId);
-    }
+
 
 
     //add new chat
-    public chat newChat(chat Chat){
-       return chatRepo.save(Chat);
+    public chat newChat(String userId){
+        List<String> usersInChat = new ArrayList<String>();
+        usersInChat.add(userId);
+        chat Chat = new chat(usersInChat);
+
+        return chatRepo.save(Chat);
 
     }
+
+    public List<message> showChat (String chatId){
+        chat Chat = chatRepo.findChatById(chatId);
+       return Chat.getMessagesInChat();
+    }
+
 
 
     //deletechatbyId
