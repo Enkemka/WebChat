@@ -44,7 +44,7 @@ public class AuthController {
         UserResponse userResponse = new UserResponse(token, request.getUsername());
 
         return ResponseEntity.ok(userResponse);
-         // give the "hall pass"
+         // give the "token"
     }
 
     @PostMapping("/register")

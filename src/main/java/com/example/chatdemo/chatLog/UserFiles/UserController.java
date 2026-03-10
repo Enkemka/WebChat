@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,15 +23,35 @@ public class UserController {
 
 
 
+
     @GetMapping("/home")
     public ResponseEntity<?> homePage(@AuthenticationPrincipal UserDetails user ){
         if (user == null) {
-            System.out.println("not wokring");
+            System.out.println("not working");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "User not authenticated"));
         }
         String username=user.getUsername();
         return ResponseEntity.ok(Map.of("username",username));
+    }
+
+
+
+@GetMapping("/recents")
+public List<recentChats> showRecents (@AuthenticationPrincipal UserDetails user,String UserId){
+//map name
+    //most recent message
+
+        return userService.showRecentChats( UserId);
+
+}
+
+
+
+
+    @GetMapping("/UserSearch")
+    public ResponseEntity<?> userSearch(@RequestParam String Name){
+      return ResponseEntity.ok(userService.userSearch(Name));
     }
 
 

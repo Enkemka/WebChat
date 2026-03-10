@@ -20,7 +20,7 @@ public class webSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // endpoint clients use to connect (e.g., ws://localhost:8080/chat)
-        registry.addEndpoint("/chat")  .setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/ws")  .setAllowedOriginPatterns("*").withSockJS();
 
 
     }
@@ -28,7 +28,7 @@ public class webSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         // clients subscribe here
-        registry.enableSimpleBroker("/topic");
+        registry.enableSimpleBroker("/messageGroup");
 
        // client sends here
         registry.setApplicationDestinationPrefixes("/app");

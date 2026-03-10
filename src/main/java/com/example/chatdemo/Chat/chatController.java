@@ -23,6 +23,10 @@ public class chatController {
 
     @PostMapping("/createChat")
     public ResponseEntity<chat> createChat(@RequestBody String userId) {
+
+
+
+
         try {
 
             return ResponseEntity.ok(chatService.newChat(userId));
@@ -34,6 +38,9 @@ public class chatController {
 
     @GetMapping("/{chatId}/view")
     public ResponseEntity<List<message>> viewChat(@PathVariable String chatId) {
+
+        //if session user id is in chat as one of the users
+
         try {
             List<message> Chat = chatService.showChat(chatId);
             return ResponseEntity.ok(Chat);
@@ -41,6 +48,9 @@ public class chatController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
+    //show 10 most recent messages,
 
 
     @DeleteMapping("/deleteChat/{chatId}")
@@ -83,19 +93,6 @@ public class chatController {
 
 
 //usermakes chat
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

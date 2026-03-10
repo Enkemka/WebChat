@@ -31,7 +31,7 @@ public class chat {
     }
 
     public void setId(String id) {
-        id = id;
+        this.id = id;
     }
 
     public List<String> getUsersInChatId() {

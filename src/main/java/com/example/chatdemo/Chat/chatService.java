@@ -34,10 +34,22 @@ public class chatService {
 
     }
 
+//    public List<chat> showChatHistory(){
+//
+//    }
+
+
+
+
     public List<message> showChat (String chatId){
         chat Chat = chatRepo.findChatById(chatId);
        return Chat.getMessagesInChat();
+       //fix to include pagenation
     }
+
+
+
+
 
 
 
@@ -64,6 +76,8 @@ public class chatService {
         mongoTemplate.updateFirst(query, update, chat.class);
 
     }
+
+
 
     public void AddMessage(Message message, String chatId){
 
