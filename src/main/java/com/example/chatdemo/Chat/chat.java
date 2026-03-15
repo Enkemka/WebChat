@@ -25,6 +25,9 @@ public class chat {
         this.messagesInChat = messagesInChat;
     }
 
+    public chat() {
+
+    }
 
     public String getId() {
         return id;

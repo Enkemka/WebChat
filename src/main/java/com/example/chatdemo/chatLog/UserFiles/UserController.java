@@ -38,17 +38,13 @@ public class UserController {
 
 
 @GetMapping("/recents")
-public List<recentChats> showRecents (@AuthenticationPrincipal UserDetails user,String UserId){
+public List<recentChats> showRecents (@AuthenticationPrincipal userPrincipal user, @RequestParam int limit){
 //map name
     //most recent message
-
-        return userService.showRecentChats( UserId);
+    String Id = user.getId();
+        return userService.showRecentChats(Id,limit);
 
 }
-
-
-
-
     @GetMapping("/UserSearch")
     public ResponseEntity<?> userSearch(@RequestParam String Name){
       return ResponseEntity.ok(userService.userSearch(Name));

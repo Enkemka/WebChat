@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebsocketControllerDemo {
 
-    @Autowired
+   /* @Autowired
     private chatService chatService;
 
 
@@ -22,7 +22,7 @@ public class WebsocketControllerDemo {
             chatService.AddMessage(message,chatId);
             return  message;
 
-    }
+    }*/
 
 
 

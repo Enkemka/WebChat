@@ -37,49 +37,6 @@ public class UserService {
 
 
 
-    public List<recentChats> showRecentChats (String userId){
-
-        //sort chats by creation date
-        //get 5 most recernt
-
-        Aggregation aggregation = Aggregation.newAggregation(
-
-                Aggregation.match(
-                        Criteria.where("usersInChatId").in(userId)
-                ),
-
-                Aggregation.unwind("messagesInChat"),
-
-                Aggregation.sort(Sort.Direction.DESC, "messagesInChat.creationDate"),
-
-                Aggregation.group("id")
-                        .first("chatName").as("chatName")
-                        .first("messagesInChat.message").as("recentChatMessage")
-                        .first("messagesInChat.senderName").as("recentChatSender")
-                        .first("messagesInChat.creationDate").as("time"),
-
-                Aggregation.sort(Sort.Direction.DESC, "time"),
-
-                Aggregation.limit(5)
-        );
-
-        AggregationResults<recentChats> results =
-                mongoTemplate.aggregate(aggregation, "chat", recentChats.class);
-
-        return results.getMappedResults();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
     public User registerUser(UserRegisterDto user) {
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
             throw new IllegalArgumentException("userName already exists");
@@ -94,6 +51,46 @@ public class UserService {
         return userRepo.save(RegisteredUser);
     }
 
+
+
+
+    public List<recentChats> showRecentChats (String userId , int limit){
+
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(
+                        Criteria.where("usersInChatId").is(userId) // <--- change here
+                ),
+                Aggregation.unwind("messagesInChat"),
+                Aggregation.sort(Sort.Direction.DESC, "messagesInChat.creationDate"),
+                Aggregation.group("_id")
+                        .first("chatName").as("chatName")
+                        .first("messagesInChat.message").as("recentChatMessage")
+                        .first("messagesInChat.senderName").as("recentChatSender")
+                        .first("messagesInChat.creationDate").as("time"),
+                Aggregation.sort(Sort.Direction.DESC, "time"),
+                Aggregation.limit(limit)
+        );
+
+        AggregationResults<recentChats> results =
+                mongoTemplate.aggregate(aggregation, "chat", recentChats.class);
+
+        return results.getMappedResults();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public List<UserSearchDto> userSearch (String name){
         List<User> userSearch = userRepo.findByUsernameContaining(name);
 
@@ -106,6 +103,13 @@ public class UserService {
 
         return dtoList;
     }
+
+
+
+
+
+
+
 
 
 

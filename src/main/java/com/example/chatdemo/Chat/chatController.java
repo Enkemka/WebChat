@@ -1,9 +1,12 @@
 package com.example.chatdemo.Chat;
 
+import com.example.chatdemo.chatLog.UserFiles.recentChats;
+import com.example.chatdemo.chatLog.UserFiles.userPrincipal;
 import com.example.chatdemo.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.messaging.Message;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +24,21 @@ public class chatController {
         this.chatService = chatService;
     }
 
+//
+
+    @GetMapping("/all-chats")
+    public List<recentChats> getAllChats(@AuthenticationPrincipal userPrincipal user) {
+        String userId = user.getId();
+        return chatService.getAllUserChats(userId);
+    }
+
+
+
+
+
     @PostMapping("/createChat")
-    public ResponseEntity<chat> createChat(@RequestBody String userId) {
-
-
-
-
+    public ResponseEntity<chat> createAChat(@RequestBody String userId) {
         try {
-
             return ResponseEntity.ok(chatService.newChat(userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -36,6 +46,7 @@ public class chatController {
     }
 
 
+    //view speicfic chat and all messages clicked on as chat object
     @GetMapping("/{chatId}/view")
     public ResponseEntity<List<message>> viewChat(@PathVariable String chatId) {
 
@@ -49,8 +60,6 @@ public class chatController {
         }
     }
 
-
-    //show 10 most recent messages,
 
 
     @DeleteMapping("/deleteChat/{chatId}")
@@ -67,11 +76,11 @@ public class chatController {
 
 
     @PatchMapping("/{chatId}/add")
-    public ResponseEntity<?> addMessage(@RequestBody Message message,@PathVariable String chatId){
+    public ResponseEntity<?> addMessage(@RequestBody message Message,@PathVariable String chatId){
         //
 
         try {
-            chatService.AddMessage(message,chatId);
+            chatService.addMessage(Message,chatId);
             return ResponseEntity.ok("ok");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -99,7 +108,7 @@ public class chatController {
     @PatchMapping("/{chatId}/add/{userId}")
     public ResponseEntity<?> addUser(@PathVariable String userId,@PathVariable String chatId){
         try {
-            chatService.AddUser(userId,chatId);
+            chatService.addUser(userId,chatId);
             return ResponseEntity.ok("ok");
         } catch (Exception e) {
             throw new RuntimeException(e);
