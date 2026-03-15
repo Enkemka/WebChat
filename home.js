@@ -1,70 +1,90 @@
-const welcomeText = document.getElementById("welcome-text");
-const chatList = document.getElementById("chat-list");
-const logoutBtn = document.getElementById("logout-btn");
-
-// Mock data for now
-const user = {  };
-const recentChats = [
-  { id: 1, name: "Spring Boot Team" },
-  { id: 2, name: "MongoDB Learners" },
-  { id: 3, name: "Frontend Dev Group" },
-];
-
-// Render chats
-chatList.innerHTML = "";
-recentChats.forEach((chat) => {
-  const li = document.createElement("li");
-  li.textContent = chat.name;
-  chatList.appendChild(li);
-});
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", async () => {
-  const messageEl = document.getElementById("username"); // where username will be displayed
-  messageEl.textContent = "";
+  const welcomeText = document.getElementById("welcome-text");
+  const chatList = document.getElementById("chat-list");
+  const logoutBtn = document.getElementById("logout-btn");
+  const viewAllBtn = document.getElementById("view-all-chats");
+  const searchBtn = document.getElementById("search-btn");
+  const userSearch = document.getElementById("user-search");
 
-  const token = localStorage.getItem("token");
+  const modal = document.getElementById("chatModal");
+  const btn = document.getElementById("createChatBtn");
+  const span = document.getElementsByClassName("close")[0];
+  const submitBtn = document.getElementById("submitChat");
+  const input = document.getElementById("userIdsInput");
 
-  if (!token) {
-    messageEl.textContent = "No token found. Please log in.";
-    console.error("No token in localStorage");
-    return;
-  }
+  // Mock user & recent chats
+// removed this   const user = { username: "Alice" };
 
-  try {
+
+
+
+
+
+
+
+
+
+
+  // Display welcome
+// removed this  welcomeText.textContent = `Hello, ${user.username}!`;
+const token = localStorage.getItem("token");
+
+console.log(token);
+
+let username = "";
+const recentChats = [];
+
+// Fetch username
+async function fetchUsername(token) {
     const res = await fetch("http://localhost:8080/User/home", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      }
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        }
     });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || `Network error: ${res.status}`);
-    }
-
     const data = await res.json();
-    console.log("Received data:", data);
+    username = data.username;
 
-    // Display the username
-    messageEl.textContent = data.username;
+    welcomeText.textContent = `Hello, ${username}!`;
+}
 
-  } catch (err) {
-    console.error("Error fetching home:", err);
-    messageEl.textContent = "Error loading username";
-  }
-
-try{
-  const response = await fetch("http://localhost:8080/User/chatLog?=${3}&/", {
+// Fetch recent chats
+async function fetchRecentChats(token) {
+    const res = await fetch("http://localhost:8080/User/recents?limit=5", {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        }
+    });
+    const data = await res.json();
+    recentChats.length = 0;          // clear old data
+    recentChats.push(...data);        // save new data
 }
 
 
+await fetchUsername(token);
+
+// Get recent chats
+await fetchRecentChats(token);
+
+console.log(recentChats);
+
+ // should be JWT
+ //
+
+
+
+
+
+
+  // Display recent chats (1–5)
+  chatList.innerHTML = "";
+  recentChats.slice(0,5).forEach(chat => {
+    const li = document.createElement("li");
+    li.textContent = chat.name;
+    li.onclick = () => alert(`Go to chat ${chat.name}`);
+    chatList.appendChild(li);
+  });
 
 
 
@@ -80,92 +100,48 @@ try{
 
 
 
-});
 
+  // Logout
+  logoutBtn.onclick = () => {
+    alert("Logged out!");
+    window.location.href = "index.html";
+  };
 
+  // View all chats
+  viewAllBtn.onclick = () => {
+    window.location.href = "all-chats.html";
+  };
 
+  // Search users
+  searchBtn.onclick = () => {
+    const query = userSearch.value.trim();
+    if (!query) return alert("Enter a username to search");
+    alert(`Searching for user: ${query}`);
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-// Welcome message
-welcomeText.textContent = `Welcome, ${data.username}!`;
-
-
-
-// Logout
-logoutBtn.addEventListener("click", () => {
-  alert("Logged out!");
-  window.location.href = "index.html";
-});
-
-
-
-
-
-
-const modal = document.getElementById("chatModal");
-const btn = document.getElementById("createChatBtn");
-const span = document.getElementsByClassName("close")[0];
-const submitBtn = document.getElementById("submitChat");
-const input = document.getElementById("userIdsInput");
-
-// Open modal
-btn.onclick = () => modal.style.display = "none";
-
-// Close modal when clicking X
-span.onclick = () => modal.style.display = "none";
-
-// Close modal if user clicks outside the modal
-window.onclick = (event) => {
+  // Modal logic
+  btn.onclick = () => modal.style.display = "block";
+  span.onclick = () => modal.style.display = "none";
+  window.onclick = (event) => {
     if (event.target == modal) modal.style.display = "none";
-};
+  };
 
-// Submit chat
-submitBtn.onclick = async () => {
-    const userIds = input.value;
-    if (!userIds) {
-        alert("Please enter at least one user ID.");
-        return;
-    }
+  submitBtn.onclick = () => {
+    const userIds = input.value.split(",").map(id => id.trim()).filter(Boolean);
+    if (userIds.length === 0) return alert("Enter at least one user ID");
+    alert(`Creating chat with: ${userIds.join(", ")}`);
+    modal.style.display = "none";
+    input.value = "";
+  };
 
-    try {
-        const response = await fetch("/createChat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(userIds.split(",").map(id => id.trim()))
-        });
 
-        if (response.ok) {
-            const chat = await response.json();
-            alert(`Chat created! Chat ID: ${chat.id}`);
-            modal.style.display = "none";
-            input.value = ""; // clear input
-        } else {
-            alert("Failed to create chat.");
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Error creating chat.");
-    }
-};
 
+  
+   
+
+
+
+
+
+
+});
