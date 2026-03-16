@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <link rel="stylesheet" href="message.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+    <div class="logo">ChatApp</div>
+    <div class="nav-links">
+      <a href="home.html" class="active">Home</a>
+      <a href="settings.html">Settings</a>
+      <a href="#" id="logout-btn">Logout</a>
+    </div>
+  </nav>
+
+    <div id="chatModal" class="modal" >
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Users to Chat</h2>
+            <input type="text" id="userIdsInput" placeholder="Enter user IDs, separated by commas">
+            <button id="submitChat">Create Chat</button>
+        </div>
+    </div>
+    
+</body>
+</html>
