@@ -8,6 +8,20 @@ The goal of the project is not only to build a working messaging system but also
 
 ---
 
+## Chat Interface
+
+![Chat UI](Screenshot 2026-03-17 at 8.46.21 AM.png)
+
+
+
+
+
+
+
+
+
+
+
 # Tech Stack
 
 ## Backend
