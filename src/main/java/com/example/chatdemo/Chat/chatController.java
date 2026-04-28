@@ -14,7 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/chat")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(
+        origins = "http://127.0.0.1:5500",
+        allowedHeaders = "*",
+        allowCredentials = "true",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS}
+)
 public class chatController {
 
    @Autowired
@@ -37,9 +42,9 @@ public class chatController {
 
 
     @PostMapping("/createChat")
-    public ResponseEntity<chat> createAChat(@RequestBody String userId) {
+    public ResponseEntity<chat> createAChat(@RequestBody String userId,@RequestBody String Chatname ) {
         try {
-            return ResponseEntity.ok(chatService.newChat(userId));
+            return ResponseEntity.ok(chatService.newChat(userId, Chatname));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -48,17 +53,25 @@ public class chatController {
 
     //view speicfic chat and all messages clicked on as chat object
     @GetMapping("/{chatId}/view")
-    public ResponseEntity<List<message>> viewChat(@PathVariable String chatId) {
+    public ResponseEntity<chat> viewChat(@PathVariable String chatId) {
 
         //if session user id is in chat as one of the users
 
         try {
-            List<message> Chat = chatService.showChat(chatId);
+            chat Chat = chatService.viewChat(chatId);
             return ResponseEntity.ok(Chat);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
+
+
+
+
+
+
 
 
 

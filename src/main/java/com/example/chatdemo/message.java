@@ -13,13 +13,13 @@ public class message {
     private String message;
     private String creationDate;
 
-    public message(String id, String chatId, String senderId, String senderName, String message, String creationDate) {
-        this.id = id;
+    public message( String chatId, String senderId, String senderName, String message ,  String creationDate) {
+
         this.chatId = chatId;
         this.senderId = senderId;
         this.senderName = senderName;
         this.message = message;
-        this.creationDate = creationDate;
+        this.creationDate =  creationDate;
     }
 
 

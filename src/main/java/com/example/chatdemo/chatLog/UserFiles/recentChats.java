@@ -4,11 +4,22 @@ import com.example.chatdemo.message;
 
 public class recentChats {
 
+
+
+    private String chatId;
     private String chatName;
     private String recentChatMessage;
     private String recentChatSender;
     private String time;
 
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
 
     public String getChatName() {
         return chatName;

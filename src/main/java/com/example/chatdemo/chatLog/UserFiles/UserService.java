@@ -54,19 +54,19 @@ public class UserService {
 
 
 
-    public List<recentChats> showRecentChats (String userId , int limit){
+    public List<recentChats> showRecentChats(String userId, int limit) {
 
+        System.out.println(userId);
         Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.match(
-                        Criteria.where("usersInChatId").is(userId) // <--- change here
-                ),
+                Aggregation.match(Criteria.where("usersInChatId").in(userId)), // <--- key change
                 Aggregation.unwind("messagesInChat"),
                 Aggregation.sort(Sort.Direction.DESC, "messagesInChat.creationDate"),
                 Aggregation.group("_id")
-                        .first("chatName").as("chatName")
                         .first("messagesInChat.message").as("recentChatMessage")
                         .first("messagesInChat.senderName").as("recentChatSender")
-                        .first("messagesInChat.creationDate").as("time"),
+                        .first("messagesInChat.creationDate").as("time")
+                        .first("name").as("chatName")
+                        .first("_id").as("chatId"),// if you have chatName
                 Aggregation.sort(Sort.Direction.DESC, "time"),
                 Aggregation.limit(limit)
         );
@@ -74,8 +74,8 @@ public class UserService {
         AggregationResults<recentChats> results =
                 mongoTemplate.aggregate(aggregation, "chat", recentChats.class);
 
+        System.out.println("Found chats: " + results.getMappedResults().size());
         return results.getMappedResults();
-
     }
 
 

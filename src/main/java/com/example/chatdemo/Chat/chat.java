@@ -11,6 +11,7 @@ public class chat {
 
     @Id
     private String id;
+    private String name;
     private List<String> usersInChatId;
     private List<message> messagesInChat;
 
@@ -19,14 +20,23 @@ public class chat {
         this.usersInChatId = usersInChat;
     }
 
-    public chat(String id,List<String>usersInChat,List<message> messagesInChat) {
+    public chat(String id,String name,List<String>usersInChat,List<message> messagesInChat) {
         this.id = id;
+        this.name = name;
         this.usersInChatId = usersInChat;
         this.messagesInChat = messagesInChat;
     }
 
     public chat() {
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getId() {

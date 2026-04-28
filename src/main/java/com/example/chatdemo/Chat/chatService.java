@@ -24,6 +24,7 @@ public class chatService {
     @Autowired
     private chatRepo chatRepo;
 
+    @Autowired
     MongoTemplate mongoTemplate;
 
     public List<recentChats> getAllUserChats (String userId){
@@ -46,7 +47,7 @@ public class chatService {
     }
 
 
-    public chat newChat(String userId) {
+    public chat newChat(String userId, String chatName) {
 
         String id = new ObjectId().toString();   // generate Mongo-style id
 
@@ -54,7 +55,7 @@ public class chatService {
 
         List<message> messages = new ArrayList<>();
 
-        chat newChat = new chat(id, usersInChat, messages);
+        chat newChat = new chat(id, chatName ,usersInChat, messages);
 
         return mongoTemplate.save(newChat);
     }
@@ -72,6 +73,11 @@ public class chatService {
 
         return chat.getMessagesInChat();
     }
+
+    public chat viewChat(String chatId) {
+        return chatRepo.findChatById(chatId);
+    }
+
 
     // Delete a chat
     public void deleteChat(String chatId) {

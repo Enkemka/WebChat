@@ -37,8 +37,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
 
-                .cors()  // <-- enable CORS
-                .and()
+
                 .csrf().disable() // optional
 
                 // disable CSRF for simplicity (not for prod)
