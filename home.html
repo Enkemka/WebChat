@@ -6,14 +6,13 @@
   <title>Home - ChatApp</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="home.css" />
-  
 </head>
 <body>
   <nav class="navbar">
     <div class="logo">ChatApp</div>
     <div class="nav-links">
       <a href="home.html" class="active">Home</a>
-      <a href="settings.html">Settings</a>
+      <a href="lettings.html">Lettings</a>
       <a href="#" id="logout-btn">Logout</a>
     </div>
   </nav>
@@ -21,27 +20,31 @@
   <main class="content">
     <div class="home-box">
       <h2 id="welcome-text">Welcome!</h2>
-      <h2 id="username">user!</h2>
+
+      <div class="search-section">
+        <input type="text" id="user-search" placeholder="Search for users..." />
+        <button id="search-btn">Search</button>
+      </div>
+
       <div class="chat-section">
         <button id="createChatBtn">Create New Chat</button>
         <h3>Recent Chats</h3>
         <ul id="chat-list" class="chat-list"></ul>
+        <button id="view-all-chats">View All Chats</button>
       </div>
     </div>
   </main>
 
-
   <!-- Modal -->
-    <div id="chatModal" class="modal" display="none">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Users to Chat</h2>
-            <input type="text" id="userIdsInput" placeholder="Enter user IDs, separated by commas">
-            <button id="submitChat">Create Chat</button>
-        </div>
+  <div id="chatModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Add Users to Chat</h2>
+      <input type="text" id="userIdsInput" placeholder="Enter user IDs, separated by commas">
+      <button id="submitChat">Create Chat</button>
     </div>
-    
-<script src="home.js"></script>
-  
+  </div>
+
+  <script src="home.js"></script>
 </body>
 </html>

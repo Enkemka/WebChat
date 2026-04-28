@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chat</title>
+<link rel="stylesheet" href="chat.css">
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <div class="chat-header">
+        <h2 id="chatTitle">Chat</h2>
+        <button onclick="deleteChat()">Delete Chat</button>
+    </div>
+
+    <div id="messages" class="messages"></div>
+
+    <div class="message-box">
+        <input id="messageInput" placeholder="Type message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="controls">
+
+        <div class="control">
+            <input id="removeMessageId" placeholder="Message ID">
+            <button onclick="removeMessage()">Delete Message</button>
+        </div>
+
+        <div class="control">
+            <input id="addUserId" placeholder="User ID">
+            <button onclick="addUser()">Add User</button>
+        </div>
+
+        <div class="control">
+            <input id="deleteUserId" placeholder="User ID">
+            <button onclick="deleteUser()">Remove User</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="chat.js"></script>
+
+</body>
+</html>
