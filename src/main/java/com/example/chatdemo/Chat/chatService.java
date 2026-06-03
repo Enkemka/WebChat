@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class chatService {
@@ -47,7 +46,7 @@ public class chatService {
     }
 
 
-    public chat newChat(String userId, String chatName) {
+    public Chat newChat(String userId, String chatName) {
 
         String id = new ObjectId().toString();   // generate Mongo-style id
 
@@ -55,7 +54,7 @@ public class chatService {
 
         List<message> messages = new ArrayList<>();
 
-        chat newChat = new chat(id, chatName ,usersInChat, messages);
+        Chat newChat = new Chat(id, chatName ,usersInChat, messages);
 
         return mongoTemplate.save(newChat);
     }
@@ -65,7 +64,7 @@ public class chatService {
 
         Query query = new Query(Criteria.where("_id").is(chatId));
 
-        chat chat = mongoTemplate.findOne(query, chat.class);
+        Chat chat = mongoTemplate.findOne(query, Chat.class);
 
         if (chat == null) {
             throw new RuntimeException("Chat not found");
@@ -74,7 +73,7 @@ public class chatService {
         return chat.getMessagesInChat();
     }
 
-    public chat viewChat(String chatId) {
+    public Chat viewChat(String chatId) {
         return chatRepo.findChatById(chatId);
     }
 
@@ -84,7 +83,7 @@ public class chatService {
 
         Query query = new Query(Criteria.where("_id").is(chatId));
 
-        mongoTemplate.remove(query, chat.class);
+        mongoTemplate.remove(query, Chat.class);
     }
 
     // Add a message to a chat
@@ -96,7 +95,7 @@ public class chatService {
 
         Update update = new Update().push("messagesInChat", message);
 
-        mongoTemplate.updateFirst(query, update, chat.class);
+        mongoTemplate.updateFirst(query, update, Chat.class);
     }
 
     // Remove message from chat
@@ -109,7 +108,7 @@ public class chatService {
                 Query.query(Criteria.where("_id").is(messageId))
         );
 
-        mongoTemplate.updateFirst(query, update, chat.class);
+        mongoTemplate.updateFirst(query, update, Chat.class);
     }
 
     // Add a user to chat
@@ -119,7 +118,7 @@ public class chatService {
 
         Update update = new Update().addToSet("usersInChatId", userId);
 
-        mongoTemplate.updateFirst(query, update, chat.class);
+        mongoTemplate.updateFirst(query, update, Chat.class);
     }
 
     // Remove user from chat
@@ -129,7 +128,7 @@ public class chatService {
 
         Update update = new Update().pull("usersInChatId", userId);
 
-        mongoTemplate.updateFirst(query, update, chat.class);
+        mongoTemplate.updateFirst(query, update, Chat.class);
     }
 
     // Check if user belongs to chat
@@ -140,7 +139,7 @@ public class chatService {
                         .and("usersInChatId").in(userId)
         );
 
-        return mongoTemplate.exists(query, chat.class);
+        return mongoTemplate.exists(query, Chat.class);
     }
 }
 

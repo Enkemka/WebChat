@@ -1,33 +1,45 @@
 package com.example.chatdemo.Chat;
 
 import com.example.chatdemo.message;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.util.List;
 
-@Document(collection = "chat")
-public class chat {
+@Entity
+@Table(name = "User")
+public class Chat {
 
     @Id
     private String id;
+
+    @NotBlank
+    @Size(min = 3, max = 25)
     private String name;
+
+
     private List<String> usersInChatId;
+
+
     private List<message> messagesInChat;
 
 
-    public chat(List<String>usersInChat) {
+    public Chat(List<String>usersInChat) {
         this.usersInChatId = usersInChat;
     }
 
-    public chat(String id,String name,List<String>usersInChat,List<message> messagesInChat) {
+    public Chat(String id, String name, List<String>usersInChat, List<message> messagesInChat) {
         this.id = id;
         this.name = name;
         this.usersInChatId = usersInChat;
         this.messagesInChat = messagesInChat;
     }
 
-    public chat() {
+    public Chat() {
 
     }
 

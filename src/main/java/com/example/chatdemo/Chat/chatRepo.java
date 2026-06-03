@@ -1,13 +1,13 @@
 package com.example.chatdemo.Chat;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface chatRepo extends MongoRepository<chat, String> {
+public interface chatRepo extends JpaRepository<Chat, String> {
 
-    chat findChatById(String id);
-    chat deleteChatById(String chatId);
+    Optional<Chat> findChatById(String id);
+    Chat deleteChatById(String chatId);
 }

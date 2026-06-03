@@ -1,20 +1,74 @@
 package com.example.chatdemo.chatLog.UserFiles;
 
+import com.example.chatdemo.Chat.Chat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Document(collection = "users")
+@Entity
+@Table(name = "User")
 public class User {
 
 
     @Id
     private String id;
+
+
+
+    @NotBlank
+    @Size(min = 3, max = 30)
     private String username;
+
+
     private String password;
+
+
+    @Email
+    @NotBlank
+    @Size(min = 3, max = 50)
+
     private String Email;
+
+    @CreatedDate
     private String creationDate;
+
+
+    //private List<User> FriendsList;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_chats",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id")
+    )
+    private List<Chat>chatList;
+
+    @Enumerated(EnumType.STRING)
+    private ROLE role;
+
+
+    //@NotBlank
+    //private String profilePictureUrl;
+
+
+   /* public User(String username, String password, String Email, LocalDateTime creationDate) {
+        this.username = username;
+        this.password = password;
+        this.Email = Email;
+        this.creationDate = creationDate.toString();
+        this.profilePictureUrl = "defulatPFP.url"
+
+    }*/
+
+
+
+
 
 
 

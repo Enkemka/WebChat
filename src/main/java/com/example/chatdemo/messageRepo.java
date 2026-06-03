@@ -1,8 +1,11 @@
 package com.example.chatdemo;
 
 import com.example.chatdemo.chatLog.UserFiles.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface messageRepo extends MongoRepository<message, String> {
-    message  findByid(String id);
+
+import java.util.Optional;
+
+public interface messageRepo extends JpaRepository<message,String> {
+    Optional<message> findById(long id);
 }

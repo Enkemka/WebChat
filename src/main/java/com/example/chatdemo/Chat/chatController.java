@@ -42,7 +42,7 @@ public class chatController {
 
 
     @PostMapping("/createChat")
-    public ResponseEntity<chat> createAChat(@RequestBody String userId,@RequestBody String Chatname ) {
+    public ResponseEntity<Chat> createAChat(@RequestBody String userId, @RequestBody String Chatname ) {
         try {
             return ResponseEntity.ok(chatService.newChat(userId, Chatname));
         } catch (Exception e) {
@@ -53,12 +53,12 @@ public class chatController {
 
     //view speicfic chat and all messages clicked on as chat object
     @GetMapping("/{chatId}/view")
-    public ResponseEntity<chat> viewChat(@PathVariable String chatId) {
+    public ResponseEntity<Chat> viewChat(@PathVariable String chatId) {
 
         //if session user id is in chat as one of the users
 
         try {
-            chat Chat = chatService.viewChat(chatId);
+            Chat Chat = chatService.viewChat(chatId);
             return ResponseEntity.ok(Chat);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -137,6 +137,20 @@ public class chatController {
             throw new RuntimeException(e);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
