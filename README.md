@@ -1,8 +1,8 @@
-# Chat Application (Spring Boot + MongoDB)
+# Chat Application (Spring Boot + postgresql)
 
 ## Overview
 
-This project is a **full-stack chat application** built to demonstrate modern backend architecture using **Spring Boot**, **MongoDB**, and a **JavaScript frontend**. The application allows users to authenticate, create chats, send messages, and manage chat members.
+This project is a **full-stack chat application** built to demonstrate modern backend architecture using **Spring Boot**, **sql**, and a **JavaScript frontend**. The application allows users to authenticate, create chats, send messages, and manage chat members.
 
 The goal of the project is not only to build a working messaging system but also to explore **scalable backend design, security practices, and system architecture improvements**.
 
