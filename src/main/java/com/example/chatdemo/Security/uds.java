@@ -1,5 +1,8 @@
-package com.example.chatdemo.chatLog.UserFiles;
+package com.example.chatdemo.Security;
 
+import com.example.chatdemo.Entity.User;
+import com.example.chatdemo.Repository.UserRepo;
+import com.example.chatdemo.chatLog.UserFiles.userPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

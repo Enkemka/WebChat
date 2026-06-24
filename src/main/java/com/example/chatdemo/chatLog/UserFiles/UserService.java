@@ -1,6 +1,8 @@
 package com.example.chatdemo.chatLog.UserFiles;
 
-import com.example.chatdemo.message;
+import com.example.chatdemo.Entity.User;
+import com.example.chatdemo.Entity.message;
+import com.example.chatdemo.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;

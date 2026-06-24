@@ -1,6 +1,7 @@
 package com.example.chatdemo.chatLog.UserFiles;
 
 
+import com.example.chatdemo.Entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

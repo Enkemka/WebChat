@@ -1,4 +1,4 @@
-package com.example.chatdemo.chatLog.UserFiles;
+package com.example.chatdemo.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

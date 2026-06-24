@@ -1,4 +1,4 @@
-package com.example.chatdemo.chatLog.UserFiles;
+package com.example.chatdemo.Security;
 import io.jsonwebtoken.Jwts;
 
 import io.jsonwebtoken.Claims;

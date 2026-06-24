@@ -1,10 +1,6 @@
-package com.example.chatdemo;
+package com.example.chatdemo.Entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -14,13 +10,15 @@ public class message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
-    @NotBlank
-    private String chatId;
+    @ManyToOne
+    @JoinColumn(name = "chat")
+    private Long chatId;
 
-    @NotBlank
-    private String senderId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Long senderId;
 
     @NotBlank
     private String senderName;
@@ -29,15 +27,17 @@ public class message {
     private String message;
 
     @CreatedDate
-    private String creationDate;
+    private String sendDate;
 
-    public message( String chatId, String senderId, String senderName, String message ,  String creationDate) {
+
+
+    public message( Long chatId, Long senderId, String senderName, String message ,  String sendDate) {
 
         this.chatId = chatId;
         this.senderId = senderId;
         this.senderName = senderName;
         this.message = message;
-        this.creationDate =  creationDate;
+        this.sendDate =  sendDate;
     }
 
     public message() {
@@ -45,27 +45,25 @@ public class message {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
-    public String getChatId() {
+
+    public Long getChatId() {
         return chatId;
     }
 
-    public void setChatId(String chatId) {
+    public void setChatId(Long chatId) {
         this.chatId = chatId;
     }
 
-    public String getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(String senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
 
@@ -86,11 +84,11 @@ public class message {
     }
 
     public String getCreationDate() {
-        return creationDate;
+        return sendDate;
     }
 
     public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+        this.sendDate = creationDate;
     }
 
 

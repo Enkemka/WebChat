@@ -1,6 +1,6 @@
-package com.example.chatdemo.chatLog.UserFiles;
+package com.example.chatdemo.Entity;
 
-import com.example.chatdemo.Chat.Chat;
+import com.example.chatdemo.Security.ROLE;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,10 +17,9 @@ import java.util.List;
 public class User {
 
 
+    @jakarta.persistence.Id
     @Id
-    private String id;
-
-
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 30)
@@ -27,7 +27,6 @@ public class User {
 
 
     private String password;
-
 
     @Email
     @NotBlank
@@ -39,18 +38,29 @@ public class User {
     private String creationDate;
 
 
-    //private List<User> FriendsList;
+    @OneToMany(mappedBy = "user")
+    private List<UserChat> userChats = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_chats",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id")
-    )
+
     private List<Chat>chatList;
 
     @Enumerated(EnumType.STRING)
     private ROLE role;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //@NotBlank
@@ -119,11 +129,11 @@ public class User {
         this.password = password;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -165,6 +175,8 @@ public class User {
     public void setEmail(String email) {
         Email = email;
     }
+
+
 
 
 

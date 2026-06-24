@@ -1,7 +1,5 @@
 package com.example.chatdemo.chatLog.UserFiles;
 
-import com.example.chatdemo.message;
-
 public class recentChats {
 
 

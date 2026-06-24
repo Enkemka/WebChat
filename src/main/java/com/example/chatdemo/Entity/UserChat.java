@@ -1,11 +1,11 @@
-package com.example.chatdemo.chatLog.UserFiles;
+package com.example.chatdemo.Entity;
 
-import com.example.chatdemo.Chat.Chat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "User_CHat")
 public class UserChat {
 
     @Id

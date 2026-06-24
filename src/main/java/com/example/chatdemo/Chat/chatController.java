@@ -1,8 +1,9 @@
 package com.example.chatdemo.Chat;
 
+import com.example.chatdemo.Entity.Chat;
 import com.example.chatdemo.chatLog.UserFiles.recentChats;
 import com.example.chatdemo.chatLog.UserFiles.userPrincipal;
-import com.example.chatdemo.message;
+import com.example.chatdemo.Entity.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.messaging.Message;
 import org.springframework.http.ResponseEntity;
@@ -57,12 +58,6 @@ public class chatController {
 
         //if session user id is in chat as one of the users
 
-        try {
-            Chat Chat = chatService.viewChat(chatId);
-            return ResponseEntity.ok(Chat);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
 
